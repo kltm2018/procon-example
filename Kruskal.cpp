@@ -1,104 +1,84 @@
+//union_find_tree
+//クラスカル法
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_2_A&lang=jp
-#include<vector>
 #include<iostream>
+#include<vector>
 #include<algorithm>
 using namespace std;
-#define MAX 100000
-#define MAX_E 100000
-
-int par[MAX], rank_[MAX];
-
-void init(int N)
-{
-	for(int i=0;i<N;i++)
-
-	{
-		par[i] = i;
-		rank_[i] = 0;
-	}
-}
-
-int find(int x)
-{
-	if (par[x] == x)
-	{
-		return x;
-
-	}
-	return par[x] = find(par[x]);
-
-}
-
-void unite(int x, int y)
-{
-	x = find(x);
-	y = find(y);
-	if (x == y)
-	{
-		return;
+class union_find_tree {
+private:
+	vector<int>par, rank_;
+public:
+	union_find_tree(int n) :par(n), rank_(n) {
+		for (int i = 0; i < n; i++) {
+			par[i] = i;
+			rank_[i] = 0;
+		}
 	}
 
-	if (rank_[x] < rank_[y])
-	{
-		par[x] = y;
-	}
-	else
-	{
-		par[y] = x;
-	}
-	if (rank_[x] == rank_[y])
-	{
-		rank_[x]++;
-	}
-}
+	void unite(int x, int y) {
+		x = root(x);
+		y = root(y);
+		if (x == y) {
+			return;
+		}
+		if (rank_[x] < rank_[y]) {
+			par[x] = y;
+		}
+		else if (rank_[x] == rank_[y]) {
+			par[y] = x;
+			rank_[x]++;
 
-
-bool same(int x, int y)
-{
-	return find(x) == find(y);
-}
-
-struct edge
-{
-	int u, v, cost;
+		}
+		else if (rank_[y] < rank_[x]) {
+			par[y] = x;
+		}
+	}
+	int root(int x) {
+		if (par[x] == x) {
+			return x;
+		}
+		return par[x] = root(par[x]);
+	}
+	bool same(int x, int y) {
+		return root(x) == root(y);
+	}
 };
 
-bool comp(const edge &e1, const edge &e2)
-{
-	return e1.cost < e2.cost;
-}
+struct edge {
+	int from, to, cost;
+	bool operator<(const edge& other)const {
+		return cost < other.cost;
+	}
+};
 
-int V, E;
-edge es[MAX_E];
+using edges = vector<edge>;
 
-int kruskal()
-{
-	sort(es, es + E, comp);
-	init(V);
+int kruskal(union_find_tree& uf, edges&  es, int V) {
+
+
+	sort(es.begin(), es.end());
+	int E = es.size();
+
 	int res = 0;
-	for (int i = 0; i < E; i++)
-	{
-		if (!same(es[i].u, es[i].v))
-		{
-			unite(es[i].u, es[i].v);
+	for (int i = 0; i < E; i++) {
+		if (!uf.same(es[i].from, es[i].to)) {
+			uf.unite(es[i].from, es[i].to);
 			res += es[i].cost;
-				
 		}
 	}
 	return res;
 }
-
 int main()
 {
+	int V, E;
 	cin >> V >> E;
-	for (int i = 0; i < E; i++)
-	{
-		cin >> es[i].u >> es[i].v >> es[i].cost;
+	edges es(E);
+	union_find_tree uf(V);
+	for (int i = 0; i < E; i++) {
+		cin >> es[i].from >> es[i].to >> es[i].cost;
 	}
-	cout << kruskal() << endl;
+	cout << kruskal(uf, es, V) << endl;
 	return 0;
-	
 }
-
-
 
