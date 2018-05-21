@@ -1,6 +1,8 @@
+//http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_1_A&lang=jp
+//ベルマンフォード法
 #include<iostream>
-#define MAX_V 1000
-#define MAX_E 2000
+#define MAX_V 100000
+#define MAX_E 500000
 #define INF 1e9
 using namespace std;
 struct edge {
@@ -23,7 +25,7 @@ bool find_negative_loop(int s)
 		count++;
 		for (int i = 0; i < MAX_E; i++)
 		{
-			
+
 			if (d[es[i].from] != INF && d[es[i].to] > d[es[i].from] + es[i].cost)
 			{
 				if (count == V)
@@ -46,9 +48,9 @@ bool find_negative_loop(int s)
 
 int main()
 {
-	
+
 	int r;
-	cin >> V>>E>>r;
+	cin >> V >> E >> r;
 	for (int i = 0; i < MAX_V; i++)
 	{
 		d[i] = INF;
@@ -78,5 +80,3 @@ int main()
 
 	return 0;
 }
-
-
