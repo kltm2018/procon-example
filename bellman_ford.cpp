@@ -23,7 +23,7 @@ bool find_negative_loop(int s)
 	{
 		bool update = false;
 		count++;
-		for (int i = 0; i < MAX_E; i++)
+		for (int i = 0; i < E; i++)
 		{
 
 			if (d[es[i].from] != INF && d[es[i].to] > d[es[i].from] + es[i].cost)
