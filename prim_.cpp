@@ -1,3 +1,4 @@
+//http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=ALDS1_12_A&lang=jp
 #include<vector>
 #include<iostream>
 #include<queue>
