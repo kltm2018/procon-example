@@ -1,3 +1,4 @@
+//https://onlinejudge.u-aizu.ac.jp/problems/ALDS1_11_C
 //https://onlinejudge.u-aizu.ac.jp/beta/review.html#kmc_n05/2874082
 //dfs
 #include<iostream>
@@ -7,7 +8,7 @@
 using namespace std;
 int main()
 {
-	int n;//頂点の数
+	int n;//鬆らせ縺ｮ謨ｰ
 	cin >> n;
 	vector<vector<int>>v(n);
 	for (int i = 0; i < n; i++)
@@ -34,7 +35,7 @@ int main()
 	
 	queue<int> que;
 	
-	que.push(1);//スタート地点をqueに追加
+	que.push(1);//繧ｹ繧ｿ繝ｼ繝亥慍轤ｹ繧智ue縺ｫ霑ｽ蜉
 	while (!que.empty())
 	{
 		int u;
