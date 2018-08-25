@@ -3,61 +3,30 @@
 using namespace std;
 using ll = long long;
 const int dx[4] = { 1,0,-1,0 }, dy[4] = { 0,1,0,-1 };
+const int INF = 100000;
+//http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DPL_1_A&lang=jp
 int main() {
-	string s, t;
-	while (cin >> s >> t) {
-		int s_size = s.size();
-		int t_size = t.size();
-		int ans = 0;
-
-		for (int i = 0; i < s.size(); i++) {//s‚ð‚¸‚ç‚µ‚Ä‚¢‚­
-			vector<int>a0(t.size());
-			for (int j = 0; j < t.size(); j++) {
-				if (j < t.size() && j + i < s.size() && t[j] == s[j + i]) {
-					a0[j]++;
-				}
-				else if (j < t.size() && j + i < s.size() && t[j] != s[j + i]) {
-					continue;
-				}
-			}
-			int nagasa = 0;
-			int x = 0;
-			for (int i = 0; i < t.size(); i++) {
-				int nagasa2 = 0;
-				x = i;
-				while (x < a0.size() && a0[x] == 1) {
-					x++;
-					nagasa2++;
-				}
-				nagasa = max(nagasa, nagasa2);
-			}
-			ans = max(ans, nagasa);
-		}
-
-		for (int i = 0; i < t.size(); i++) {//t‚ð‚¸‚ç‚µ‚Ä‚¢‚­
-			vector<int>a0(s.size());
-
-			for (int j = 0; j < s.size(); j++) {
-				if (j < s.size() && j + i < t.size() && s[j] == t[j + i]) {
-					a0[j]++;
-				}
-				else if (j < s.size() && j + i < t.size() && s[j] != t[j + i]) {
-					continue;
-				}
-			}
-			int nagasa = 0;
-			int x = 0;
-			for (int i = 0; i < t.size(); i++) {
-				int nagasa2 = 0;
-				x = i;
-				while (x < a0.size() && a0[x] == 1) {
-					x++;
-					nagasa2++;
-				}
-				nagasa = max(nagasa, nagasa2);
-			}
-			ans = max(ans, nagasa);
-		}
-		cout << ans << endl;
+	int n, m;
+	cin >> n >> m;
+	vector<int>cs(m);
+	for (int i = 0; i < m; i++) {
+		cin >> cs[i];
 	}
+	vector<vector<int>>dp(m + 1, vector<int>(n + 1, INF));
+	for (int i = 0; i <= m; i++) {
+		dp[i][0] = 0;
+
+	}
+	for (int j = 1; j <= n; j++) {
+		for (int i = 0; i < m; i++) {
+			dp[i + 1][j] = min(dp[i + 1][j], dp[i][j]);
+			if (j - cs[i] >= 0) {
+				dp[i + 1][j] = min({ dp[i + 1][j],dp[i + 1][j - cs[i]] + 1 });
+			}
+
+		}
+	}
+
+
+	cout << dp[m][n] << endl;
 }
