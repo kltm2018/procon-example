@@ -1,65 +1,41 @@
-//https://www.slideshare.net/iwiwi/ss-3578491
-
-#include<vector>
-#include<iostream>
-#include<algorithm>
+#include<bits/stdc++.h>
 using namespace std;
-const int MAX_N = 131072;
-
-int n;
-int dat[MAX_N * 2 - 1];
-//初期化
-void init()
-{
-	//全ての値をINT_MAX
-	for (int i = 0; i < 2 * n - 1; i++)
-	{
-		dat[i] = INT_MAX;
-	}
-}
-
-//i番目の値をxに変更
-void update(int i, int x)
-{
-	//葉のノードの番号
-	i += n - 1;
-	dat[i] = x;
-	//上りながら更新
-	while (i > 0)
-	{
-		i = (i - 1) / 2;
-		dat[i] = min(dat[i * 2 + 1], dat[i * 2 + 2]);
+class union_find_tree {
+private:
+	vector<int>par, rank_;
+public:
+	union_find_tree(int n) :par(n), rank_(n) {
+		for (int i = 0; i < n; i++) {
+			par[i] = i;
+			rank_[i] = 0;
+		}
 	}
 
-}
+	void unite(int x, int y) {
+		x = root(x);
+		y = root(y);
+		if (x == y) {
+			return;
+		}
+		if (rank_[x] < rank_[y]) {
+			par[x] = y;
+		}
+		else if (rank_[x] == rank_[y]) {
+			par[y] = x;
+			rank_[x]++;
 
-
-//[a,b)の最小値を求める
-//k番目のノード　範囲は[l,r)
-
-int query(int a, int b, int k, int l, int r)
-{
-	if (r <= a || b <= l)
-	{
-		return INT_MAX;
+		}
+		else if (rank_[y] < rank_[x]) {
+			par[y] = x;
+		}
 	}
-	if (a <= l && r <= b)
-	{
-		return dat[k];
+	int root(int x) {
+		if (par[x] == x) {
+			return x;
+		}
+		return par[x] = root(par[x]);
 	}
-	else
-	{
-		int vl = query(a, b, k * 2 + 1, l, (l + r) / 2);
-		int vr = query(a, b, k * 2 + 2, (l + r) / 2, r);
-		return min(vl, vr);
+	bool same(int x, int y) {
+		return root(x) == root(y);
 	}
-
-}
-
-
-
-
-int main()
-{
-
-}
+};
