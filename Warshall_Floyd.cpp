@@ -1,19 +1,17 @@
 //http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_1_C&lang=jp
-//ワーシャルフロイド法
-#include<iostream>
-#include<vector>
-#include<algorithm>
+#include<bits/stdc++.h>
+#pragma warning(disable:4996)
 using namespace std;
-
-static const int MAX = 100;
-#define INF 2000000000000ll
+using ll = long long;
+const int dx[4] = { 1,0,-1,0 }, dy[4] = { 0,1,0,-1 };
+//#define int long long
+const int INF = numeric_limits<int>::max();
 int V, E;
-long long dp[MAX][MAX];
-
-void Warshall_Floyd() {
+vector < vector<ll>>dp;
+vector<vector<ll>> Warshall_Floyd(int V, vector<vector<ll>>&dp) {
 	for (int k = 0; k < V; k++) {
 		for (int i = 0; i < V; i++) {
-			for (int j =0 ; j < V; j++) {
+			for (int j = 0; j < V; j++) {
 				if (dp[i][k] == INF || dp[k][j] == INF) {
 					continue;
 				}
@@ -21,11 +19,14 @@ void Warshall_Floyd() {
 			}
 		}
 	}
+	return dp;
 }
-
-
-int main() {
+signed main() {
 	cin >> V >> E;
+	dp.resize(V);
+	for (int i = 0; i < V; i++) {
+		dp[i].resize(V);
+	}
 	for (int i = 0; i < V; i++) {
 		for (int j = 0; j < V; j++) {
 			if (i == j) {
@@ -40,8 +41,9 @@ int main() {
 		int from, to, cost;
 		cin >> from >> to >> cost;
 		dp[from][to] = cost;
+		//dp[to][from] = cost;
 	}
-	Warshall_Floyd();
+	dp = Warshall_Floyd(V, dp);
 	bool minus = false;
 	for (int i = 0; i < V; i++) {
 		if (dp[i][i] < 0) {
@@ -68,12 +70,5 @@ int main() {
 			cout << endl;
 		}
 	}
-	return 0;
+
 }
-
-
-
-
-
-
-
