@@ -7,11 +7,13 @@ bool used[1000];
 int perm[1000];
 void permutation1(int pos, int n) {
 	if (pos == n) {
+		/*
 		for (int i = 0; i < n; i++) {
 			cout << perm[i];
 		}
 		cout << endl;
-		return;
+		*/
+		//‚±‚±‚É¶¬‚³‚ê‚é”z—ñperm‚É‘Î‚·‚éˆ—‚ð‘‚­
 	}
 	for (int i = 0; i < n; i++) {
 		if (!used[i]) {
@@ -21,7 +23,7 @@ void permutation1(int pos, int n) {
 			used[i] = false;
 		}
 	}
-	return;
+	
 }
 int main() {
 	permutation1(0, 3);
