@@ -1,98 +1,41 @@
-#include<iostream>
-#include<vector>
-#define MAX_N 100000
+#include<bits/stdc++.h>
 using namespace std;
-int par[MAX_N], r[MAX_N];//rank
-int N;
-
-void init(int N)
-{
-	int i;
-	for ( i= 0; i < N; i++)
-	{
-		r[i] = 0;
-		par[i] = i;
+class union_find_tree {
+private:
+	vector<int>par, rank_;
+public:
+	union_find_tree(int n) :par(n), rank_(n) {
+		for (int i = 0; i < n; i++) {
+			par[i] = i;
+			rank_[i] = 0;
+		}
 	}
-}
 
-int root(int x)
-{
-	if (par[x] == x)
-	{
-		return x;
+	void unite(int x, int y) {
+		x = root(x);
+		y = root(y);
+		if (x == y) {
+			return;
+		}
+		if (rank_[x] < rank_[y]) {
+			par[x] = y;
+		}
+		else if (rank_[x] == rank_[y]) {
+			par[y] = x;
+			rank_[x]++;
+
+		}
+		else if (rank_[y] < rank_[x]) {
+			par[y] = x;
+		}
 	}
-	else
-	{
+	int root(int x) {
+		if (par[x] == x) {
+			return x;
+		}
 		return par[x] = root(par[x]);
 	}
-}
-
-bool same(int x, int y)
-{
-	return  root(x) == root(y);
-	
-}
-
-void unite(int x, int y)
-{
-	x = root(x);
-	y = root(y);
-	if (x == y)
-	{
-		return;
+	bool same(int x, int y) {
+		return root(x) == root(y);
 	}
-	if (r[x] < r[y])
-	{
-		par[x] = y;
-	}
-	else if(r[x]>r[y])
-	{
-		par[y] = x;
-	}
-	else if (r[x] == r[y])
-	{
-		par[x] = y;
-		r[y]++;
-	}
-
-}
-
-
-int main()
-{
-	
-	
-	cin >> N;
-	init(N);
-	int Q;
-	cin >> Q;
-	vector<vector<int>>v(Q, vector<int>(3));
-	for (int i = 0; i < Q; i++)
-	{
-		
-		cin >> v[i][0] >> v[i][1] >> v[i][2];
-	}
-
-	for (int i = 0; i < Q; i++)
-	{
-		if (v[i][0] == 0)
-		{
-			unite(v[i][1], v[i][2]);
-		}
-		else if (v[i][0] == 1)
-		{
-			if (same((v[i][1]),( v[i][2])))
-			{
-				cout << "Yes" << endl;
-			}
-			else
-			{
-				cout << "No" << endl;
-			}
-		}
-	}
-	for (int i = 0; i < N; i++)
-	{
-		cout << par[i]<<" "<<root(i) << endl;
-	}
-}
+};
