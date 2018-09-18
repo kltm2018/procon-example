@@ -21,7 +21,7 @@ vector<long long> sieve(long long n) {
 map<ll, int> prime_factrorize(ll n, vector<int> const & primes) {
 	map<ll, int> result;
 	for (int p : primes) {
-		if (n < p *(ll)p) break;
+		if (n < p) break;
 		while (n % p == 0) {
 			result[p] += 1;
 			n /= p;
