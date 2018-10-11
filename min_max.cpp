@@ -1,3 +1,4 @@
+//https://qiita.com/nomikura/items/1518bc8a6e04d2580b0d
 #include<bits/stdc++.h>
 #pragma warning(disable:4996)
 #ifdef _MSC_VER
