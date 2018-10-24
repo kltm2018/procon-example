@@ -81,7 +81,7 @@ int main() {
 			dy[4] = { 1, 0, -1, 0 };
 		for (int i = 0; i<H; ++i) {
 			for (int j = 0; j<W; ++j) {
-				for (int k = 0; k<4; ++k) {//各頂点から4方向に延びる辺をグラフに追加
+				for (int k = 0; k<4; ++k) {//各頂点から4方向に延びる辺をグラフに追加(無向グラフ)
 					int nx = j + dx[k], ny = i + dy[k];
 					if (0 <= ny && ny < H && 0 <= nx && nx < W) {
 						if (s[ny][nx] == '#') {
