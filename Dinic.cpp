@@ -48,7 +48,7 @@ int dinic_dfs(int v, int t, int f) {//‘‰ÁƒpƒX‚ğdfs‚Å’T‚·
 	if (v == t) {
 		return f;
 	}
-	for (int &i = iter[v]; i < g[v].size(); i++) {//“¯‚¶‚Æ‚±‚ë‚ğ‰½“x‚à’Ê‚ç‚È‚¢‚æ‚¤‚É}Š ‚è‚µ‚Ä‚¢‚é
+	for (int &i = iter[v]; i < g[v].size(); i++) {//“¯‚¶‚Æ‚±‚ë‚ğ‰½“x‚à’²‚×‚È‚¢‚æ‚¤‚É}Š ‚è‚µ‚Ä‚¢‚é
 		edge &e = g[v][i];
 		if (e.cap > 0 && level[v] < level[e.to]) {
 			int d = dinic_dfs(e.to, t, min(f, e.cap));
