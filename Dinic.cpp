@@ -14,7 +14,7 @@ inline void my_io() {
 	std::cin.tie(0);
 	cout << fixed << setprecision(10);
 }
- 
+
 struct edge {
 	int from, to, cap, rev;
 };
@@ -23,19 +23,19 @@ vector<int>level;//sからの距離(辺何本分離れているか)
 vector<int>iter;//どこまで調べ終わったか
 int v, e;
 
-void add_edge(int from,int to, int cap) {//from→to　容量capの辺をグラフに追加
+void add_edge(int from, int to, int cap) {//from→to　容量capの辺をグラフに追加
 	g[from].push_back(edge{ from,to,cap,(int)g[to].size() });
 	g[to].push_back(edge{ to,from ,0,(int)g[from].size() - 1 });
 }
 void dinic_bfs(int s) {//sからの最短距離(辺何本分離れているか)をbfsで計算する
-	fill(level.begin(),level.end(),-1);
+	fill(level.begin(), level.end(), -1);
 	queue<int>que;
 	level[s] = 0;
 	que.push(s);
 	while (!que.empty()) {
 		int v = que.front();
 		que.pop();
-		for(int i=0;i<g[v].size();i++){
+		for (int i = 0; i<g[v].size(); i++) {
 			edge &e = g[v][i];
 			if (e.cap > 0 && level[e.to] < 0) {
 				level[e.to] = level[v] + 1;
@@ -63,7 +63,7 @@ int dinic_dfs(int v, int t, int f) {//増加パスをdfsで探す
 }
 int max_flow(int s, int t) {
 	int flow = 0;
-	for (;;) {
+	while(true) {
 		dinic_bfs(s);
 		if (level[t] < 0) {
 			return flow;
@@ -88,4 +88,3 @@ signed main() {
 	cout << max_flow(0, v - 1) << endl;
 	return 0;
 }
-
