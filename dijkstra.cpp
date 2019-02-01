@@ -19,9 +19,6 @@ vector<int> dijkstra(int s, vector<vector<edge>>&graph) {//’¸“_s‚©‚ç‚Ù‚©‚Ì‚·‚×‚Ä
 		pair<int, int>p = que.top();
 		que.pop();
 		int v = p.second;
-		if (d[v] < p.first) {
-			continue;
-		}
 		for (int i = 0; i < graph[v].size(); i++) {
 			edge e = graph[v][i];
 			if (d[e.to] > d[v] + e.cost) {
