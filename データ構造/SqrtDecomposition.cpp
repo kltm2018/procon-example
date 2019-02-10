@@ -33,10 +33,12 @@ public:
 		int k = x / sqrtN;
 		data[x] += y;
 		int sum = 0;
+		/*
 		for (int i = k * sqrtN; i < (k + 1) * sqrtN; ++i) {
 			sum += data[i];
 		}
-		bucketSum[k] = sum;
+		*/
+		bucketSum[k] +=y;
 	}
 	// [x, y)
 	int getSum(int x, int y) {
